@@ -1,0 +1,18 @@
+{
+  "name": "NEMO — Personal Intelligence",
+  "short_name": "NEMO",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#071321",
+  "theme_color": "#081422",
+  "description": "NEMO personal command centre",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

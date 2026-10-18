@@ -5,14 +5,20 @@
   "scope": "./",
   "display": "standalone",
   "background_color": "#071321",
-  "theme_color": "#081422",
+  "theme_color": "#18102d",
   "description": "NEMO personal command centre",
   "icons": [
     {
-      "src": "./icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "src": "./nemo-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
     }
   ]
 }

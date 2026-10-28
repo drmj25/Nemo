@@ -9,7 +9,7 @@ export default {async fetch(request,env){
   if(origin!==ALLOWED_ORIGIN)return new Response('Forbidden',{status:403});
   if(request.method==='OPTIONS')return new Response(null,{status:204,headers:cors});
   if(request.method!=='POST')return json({error:'Method not allowed'},405);
-  if(!env.OPENAI_API_KEY||!env.NEMO_ACCESS_TOKEN)return json({error:'Server is not configured'},503);
+  if(!env.OPENAI_API_KEY||!env.NEMO_ACCESS_TOKEN){const missing=[!env.OPENAI_API_KEY?'OPENAI_API_KEY':null,!env.NEMO_ACCESS_TOKEN?'NEMO_ACCESS_TOKEN':null].filter(Boolean);return json({error:'Worker configuration missing: '+missing.join(', ')},503);}
   const supplied=request.headers.get('Authorization')||'';
   if(supplied!=='Bearer '+env.NEMO_ACCESS_TOKEN)return json({error:'Unauthorized'},401);
   const length=Number(request.headers.get('Content-Length')||0);

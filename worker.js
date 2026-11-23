@@ -1,3 +1,4 @@
+import {agentApi,agentScheduled} from './agent.js';
 import {gmailAction,gmailCallback} from './gmail.js';
 // NEMO private AI relay — deploy as a Cloudflare Worker.
 // Configure secrets OPENAI_API_KEY and NEMO_ACCESS_TOKEN in Worker settings.
@@ -17,6 +18,7 @@ export default {async fetch(request,env){
   const length=Number(request.headers.get('Content-Length')||0);
   if(length>1600000)return json({error:'Request too large'},413);
   let payload;try{payload=await request.json()}catch{return json({error:'Invalid JSON'},400)}
+  if(typeof payload.action==='string'&&payload.action.startsWith('agent_')){try{return json(await agentApi(env,payload))}catch{return json({error:'Agent engine unavailable. Check D1 binding and database migration.'},503)}}
   if(typeof payload.action==='string'&&payload.action.startsWith('gmail_')){try{return json(await gmailAction(env,payload.action))}catch{return json({error:'Gmail request failed. Please reconnect or check configuration.'},502)}}
   if(typeof payload.message!=='string'||!payload.message.trim()||payload.message.length>2000)return json({error:'Invalid message'},400);
   const memories=Array.isArray(payload.memories)?payload.memories.filter(m=>typeof m==='string').slice(0,20).map(m=>m.slice(0,240)):[];
@@ -31,4 +33,4 @@ export default {async fetch(request,env){
     const reply=(data.output||[]).flatMap(x=>x.content||[]).filter(x=>x.type==='output_text').map(x=>x.text).join('\n').trim();
     return json({reply:reply||'No text response returned.'});
   }catch{return json({error:'AI connection failed'},502)}
-}};
+},async scheduled(event,env,ctx){ctx.waitUntil(agentScheduled(env))}};

@@ -7,5 +7,12 @@
     "crons": [
       "*/15 * * * *"
     ]
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "NEMO_DB",
+      "database_name": "nemo-agent",
+      "database_id": "c9aca664-abd5-403d-9cfe-8ddd62e6000c"
+    }
+  ]
 }

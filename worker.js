@@ -1,3 +1,4 @@
+import {workspaceAction} from './workspace.js';
 import {researchAction,researchScheduled} from './research.js';
 import {deliverableAction,deliverableScheduled} from './deliverables.js';
 import {agentApi,agentScheduled} from './agent.js';
